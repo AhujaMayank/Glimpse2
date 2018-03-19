@@ -152,6 +152,7 @@ public class Inbox extends AppCompatActivity {
              a= d.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    myMessageList.clear();
                     for (DataSnapshot mysnapshot : dataSnapshot.getChildren()) {
 
                         Message message = mysnapshot.getValue(Message.class);

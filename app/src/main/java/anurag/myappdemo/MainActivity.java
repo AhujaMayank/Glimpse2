@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 Log.i(TAG,"second point");
                 user = mAuth.getCurrentUser();
-                if (user != null) {
-                    Toast.makeText(MainActivity.this, "You are logged in"+user.getDisplayName(), Toast.LENGTH_SHORT).show();
-
-                } else {
+                if(user!=null) {
+                    Toast.makeText(MainActivity.this, "You are logged in", Toast.LENGTH_SHORT).show();
+                }
+                else {
 
                     startActivityForResult(
                             AuthUI.getInstance()
@@ -297,14 +297,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             chat = f.getReference("Chat");
             users = f.getReference("users");
             group = f.getReference("Group Chat");
-            user = ((MainActivity) getActivity()).getFirebaseUser();
+            user = mfirebaseAuth.getCurrentUser();
             if(user!=null) {
+                Log.i(TAG,"oncreate");
                 users.child(user.getUid()).child("name").setValue(user.getDisplayName());
             }
             //for finding the current name of user
 
             Bundle b = getArguments();
-            details = new ArrayList<>();
+            details = new ArrayList<>(100);
             adapterList = new AdapterList(getActivity(), details);
             int selectionNumber = b.getInt(ARG_SECTION_NUMBER);
             //Important section
@@ -313,8 +314,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 //create_btn=rootView.findViewById(R.id.btn_create_places);
                 //search_btn=rootView.findViewById(R.id.btn_search_places);
                 placeslist=rootView.findViewById(R.id.lv_place_places);
-                user = ((MainActivity) getActivity()).getFirebaseUser();
+                user = mfirebaseAuth.getCurrentUser();
                 if(user!=null) {
+                    Log.i(TAG,"fragment 1");
                     users.child(user.getUid()).child("name").setValue(user.getDisplayName());
                 }
 //                create_btn.setOnClickListener(new View.OnClickListener() {
@@ -353,8 +355,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
             }
             if (selectionNumber == 2) {
-                user = ((MainActivity) getActivity()).getFirebaseUser();
+                user=mfirebaseAuth.getCurrentUser();
                 if(user!=null) {
+                    Log.i(TAG,"fragment 2");
                     users.child(user.getUid()).child("name").setValue(user.getDisplayName());
                 }
                 // Toast.makeText(getContext(), mfirebaseAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
@@ -389,7 +392,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public void onResume() {
             super.onResume();
-
         }
         private  void detach() {
             if (a != null) {
@@ -400,7 +402,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public void onStart() {
             super.onStart();
-            user = ((MainActivity) getActivity()).getFirebaseUser();
+            user = mfirebaseAuth.getCurrentUser();
             users = f.getReference("users");
                 if(user!=null) {
                     users.child(user.getUid()).child("name").setValue(user.getDisplayName());
