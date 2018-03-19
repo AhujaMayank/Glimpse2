@@ -19,6 +19,7 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="anurag.myappdemo.permission.MAPS_RECEIVE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -45,15 +46,24 @@
             android:label="@string/title_activity_select_language"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreatePlaceActivity" />
-        <activity android:name=".PlaceDetailActivity"></activity>
+        <activity android:name=".PlaceDetailActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
-
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDo_UCIUCMXefEqC9nenDY7KyC0LHbhj9w"/>
+            android:value="AIzaSyDo_UCIUCMXefEqC9nenDY7KyC0LHbhj9w" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -33,6 +33,7 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_LONGITUDE = "longitude";
     private static final String KEY_TYPE="type";
     private static final String KEY_DESCRIPTION="description";
+    private static final String KEY_ADDRESS="address";
 
     public Places_DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,7 +46,7 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_NAME + " TEXT,"
                 +KEY_PLACE + " TEXT,"
-                + KEY_TYPE + " TEXT,description TEXT,latitude text,longitude text,url1 text,url2 text,url3 text)";
+                + KEY_TYPE + " TEXT,description TEXT,latitude text,longitude text,url1 text,url2 text,url3 text,address text)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -69,6 +70,7 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_URL1,places.getUrl1());
         values.put(KEY_URL2,places.getUrl2());
         values.put(KEY_URL3,places.getUrl3());
+        values.put(KEY_ADDRESS,places.getAddress());
 
         return values;
     }
@@ -87,6 +89,7 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_URL1,places.getUrl1());
         values.put(KEY_URL2,places.getUrl2());
         values.put(KEY_URL3,places.getUrl3());
+        values.put(KEY_ADDRESS,places.getAddress());
 
         ///////////////////
 
@@ -105,13 +108,13 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
-                        KEY_NAME,KEY_PLACE, KEY_TYPE,KEY_DESCRIPTION,KEY_LATITUDE,KEY_LONGITUDE,KEY_URL1,KEY_URL2,KEY_URL3 }, KEY_NAME + "=?",
+                        KEY_NAME,KEY_PLACE, KEY_TYPE,KEY_DESCRIPTION,KEY_LATITUDE,KEY_LONGITUDE,KEY_URL1,KEY_URL2,KEY_URL3 ,KEY_ADDRESS}, KEY_NAME + "=?",
                 new String[] { String.valueOf(name) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Places places = new Places(cursor.getString(0),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7),cursor.getString(8));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getString(9));
         // return places
         return places;
     }
@@ -138,6 +141,7 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
                 places.setUrl1(cursor.getString(6));
                 places.setUrl2(cursor.getString(7));
                 places.setUrl3(cursor.getString(8));
+                places.setAddress(cursor.getString(9));
                 // Adding places to list
                 placesList.add(places);
             } while (cursor.moveToNext());
@@ -161,6 +165,7 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_URL1,places.getUrl1());
         values.put(KEY_URL2,places.getUrl2());
         values.put(KEY_URL3,places.getUrl3());
+        values.put(KEY_ADDRESS,places.getAddress());
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_NAME + " = ?",
@@ -187,4 +192,3 @@ public class Places_DatabaseHelper extends SQLiteOpenHelper {
     }
 
 }
-

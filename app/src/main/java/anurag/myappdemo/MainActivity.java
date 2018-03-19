@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+               this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+       drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     protected void onPostResume() {
         super.onPostResume();
         mAuth.addAuthStateListener(mAuthListener);
+        mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_SHORT).show();
+                mSectionsPagerAdapter.notifyDataSetChanged();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(MainActivity.this, "Not Signed in", Toast.LENGTH_SHORT).show();
                 finish();
@@ -310,6 +312,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             int selectionNumber = b.getInt(ARG_SECTION_NUMBER);
             //Important section
             if (selectionNumber == 1) {
+                onStart();
                 View rootView = inflater.inflate(R.layout.fragment_places_list, container, false);
                 //create_btn=rootView.findViewById(R.id.btn_create_places);
                 //search_btn=rootView.findViewById(R.id.btn_search_places);
@@ -368,7 +371,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent i1 = new Intent(getActivity(), Inbox.class);
-                        i1.putExtra("UserNames", details.get(i).getName());
+                        i1.putExtra("UserNames",details.get(i).getName());
                         i1.putExtra("FireAuth", mfirebaseAuth.getCurrentUser().getDisplayName());
                         startActivity(i1);
                     }
@@ -416,7 +419,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                                 Details detail = mysnapshot.getValue(Details.class);
 
                                 details.add(detail);
-
                                 Log.i(TAG, detail.getName());
                             }
                             adapterList.notifyDataSetChanged();

@@ -1,14 +1,15 @@
 package anurag.myappdemo;
 
+import android.*;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CreatePlaceActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    EditText name,place,type,description,location,url1,url2,url3;
+    EditText name,place,type,description,address,url1,url2,url3;
     Button save;
     private GoogleApiClient googleApiClient;
     private int PLACE_PICKER_REQUEST = 1;
@@ -39,7 +40,7 @@ public class CreatePlaceActivity extends AppCompatActivity implements OnMapReady
     Places_DatabaseHelper db;
     DatabaseHelper gdb;
     private GoogleMap mMap;
-    String  latitude="28.612875",   longitude="77.229310";;
+    String  latitude="28.612875",   longitude="77.229310";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class CreatePlaceActivity extends AppCompatActivity implements OnMapReady
         url1= (EditText) findViewById(R.id.et_url1_createplace);
         url2= (EditText) findViewById(R.id.et_url2_createplace);
         url3= (EditText) findViewById(R.id.et_url3_createplace);
+        address= (EditText) findViewById(R.id.et_address_createplace);
         //location=findViewById();
         add_guide= (ImageButton) findViewById(R.id.ib_add_guide_createplace);
         add_location= (ImageButton) findViewById(R.id.ib_get_location_createplace);
@@ -164,12 +166,12 @@ public class CreatePlaceActivity extends AppCompatActivity implements OnMapReady
                     places.setUrl3((url3.getText().toString()));
                     places.setLatitude(latitude);
                     places.setLongitude(longitude);
-                    //place.setLocation();
+                    places.setAddress(address.getText().toString());
 
                     Boolean res=db.addPlaces(places);
                     if(res) {
                         Toast.makeText(CreatePlaceActivity.this,
-                                "Place Added Successfully",
+                                "Place Added Successfully ",
                                 Toast.LENGTH_SHORT).show();
                     }
                     else{ Toast.makeText(CreatePlaceActivity.this,
@@ -179,7 +181,7 @@ public class CreatePlaceActivity extends AppCompatActivity implements OnMapReady
 
 
 
-                    finish();
+
 
                 }
             }
@@ -194,7 +196,7 @@ public class CreatePlaceActivity extends AppCompatActivity implements OnMapReady
             if(resultCode==RESULT_OK)
             {
                 Place place = PlacePicker.getPlace(data,this);
-                String address = String.format("%s",place.getAddress());
+                String maddress = String.format("%s",place.getAddress());
                 try {
                     latitude = String.valueOf(place.getLatLng().latitude);
                     longitude = String.valueOf(place.getLatLng().longitude);
@@ -205,7 +207,7 @@ public class CreatePlaceActivity extends AppCompatActivity implements OnMapReady
                     longitude="77.229310";
                 }
                 Toast.makeText(getApplicationContext(),latitude+"\n"+longitude,Toast.LENGTH_SHORT).show();
-                this.place.setText(address);
+                this.address.setText(maddress);
             }
             else {
                 Toast.makeText(getApplicationContext(),"ERROR",Toast.LENGTH_SHORT).show();
