@@ -22,9 +22,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/worldtour"
+        android:label="Glimpse"
+        android:roundIcon="@drawable/worldtour"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -53,7 +53,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDo_UCIUCMXefEqC9nenDY7KyC0LHbhj9w" />
+            android:value="AIzaSyB0MWEJoaBS0uRnOMTgs6iBQunEMZiSjSU" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
